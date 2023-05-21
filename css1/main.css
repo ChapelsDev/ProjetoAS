@@ -828,7 +828,7 @@ input {
     margin-left: 10px ;
   }
 
-  .favorito-button {
+  .favorite-button {
     position: absolute; /* Add absolute positioning to the favorite button */
     height: 50px;
     width: 50px;
@@ -878,9 +878,4 @@ input {
   
   .button-group button.active {
     background-color: #ccc;
-  }
-
-  .active {
-    background-color: #ff0000; /* Update with your desired style */
-    color: #ffffff;
   }
