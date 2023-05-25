@@ -33,6 +33,7 @@
             margin: 40px auto auto auto;
             display: flex;
             flex-direction: column;
+            gap:40px;
         }
         .steps-container {
             display: flex;
@@ -50,6 +51,7 @@
             border-radius: 70px;
             position: relative;
             z-index: 10;
+            margin: 0;
         }
 
         .step-item {
@@ -148,6 +150,7 @@
 
         .product-info {
             background-color: #95B0B0;
+            box-shadow: 0 15px 25px rgba(0,0,0,0.1);
             padding: 20px 40px;
             border-radius: 55px;
             display: flex;
@@ -158,6 +161,7 @@
 
         .product-name {
             display: flex;
+            box-shadow: 0 15px 25px rgba(0,0,0,0.1);
             gap: 15px;
             align-items: center;
             background-color: #0CB3B7;
@@ -182,7 +186,6 @@
         .product-char {
             display: flex;
             gap: 20px;
-
         }
 
         .char-section {
@@ -194,9 +197,10 @@
         .char-label {
             background-color: #0CB3B7;
             border-radius: 15px 15px 0 0;
-            padding: 0 5px;
+            padding: 0 10px;
             border: 1px solid #000;
             width: 150px;
+            box-shadow: 0 15px 25px rgba(0,0,0,0.1);
         }
 
         .char-label p {
@@ -210,6 +214,7 @@
             padding: 10px 10px;
             width: 200px;
             height: 150px;
+            box-shadow: 0 15px 25px rgba(0,0,0,0.1);
         }
 
         .description-container {
@@ -217,6 +222,7 @@
             flex-direction: column;
             border: 1px solid #000;
             border-radius: 15px 15px 0 0;
+            box-shadow: 0 15px 25px rgba(0,0,0,0.1);
         }
 
         .description-container label {
@@ -230,6 +236,108 @@
             padding: 0;
             vertical-align: top;
             resize: none;
+        }
+
+        .upload-container {
+            background-color: #95B0B0;
+            box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+            padding: 20px 40px;
+            border-radius: 55px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .add-container {
+            background-color: #D9D9D9;
+            width: 200px;
+            height: 200px;
+            flex-shrink: 0;
+            border-radius: 30px;
+            border: 1px solid #000;
+            cursor: pointer;
+        }
+
+        .add-container .vertical {
+            content: "";
+            height: 2px;
+            width: 100px;
+            background: #000;
+            position: relative;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .add-container .horizontal {
+            content: "";
+            height: 100px;
+            width: 2px;
+            background: #000;
+            position: relative;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .url-container {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            justify-content: center;
+            flex: 3;
+        }
+
+        .upload-label {
+            background-color: #0CB3B7;
+            border-radius: 15px 15px 0 0;
+            padding: 0 10px;
+            border: 1px solid #000;
+            box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+            width: 375px;
+        }
+
+        .upload-input {
+            display: flex;
+            box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+            gap: 15px;
+            align-items: center;
+            background-color: #0CB3B7;
+            padding: 10px 20px;
+            border-radius: 0 25px 25px 25px;
+            border: 1px solid #000;
+            width: 100%;
+        }
+
+        .upload-input input {
+            width: 100%;
+            padding: 5px 10px;
+            border-radius: 10px;
+            outline: none;
+            border: 1px solid #000;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        button {
+            background-color: #0CB3B7;
+            outline: none;
+            border: 1px solid #000;
+            border-radius: 30px;
+            padding: 15px 25px;
+            box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+            width: 150px;
+        }
+
+        .back {
+            display: none;
+        }
+
+        .invisible {
+            display: none;
         }
 
     </style>
@@ -272,12 +380,12 @@
         <div class="form-container">
             <div class="steps-container">
                 <ul class="step-list">
-                    <li class="step-item"><span class="progress-count">1</span><span class="progress-label">Informações do produto</span></li>
-                    <li class="step-item current-item"><span class="progress-count">2</span><span class="progress-label">Upload da imagem</span></li>
-                    <li class="step-item"><span class="progress-count">3</span><span class="progress-label">Confirmação</span></li>
+                    <li class="step-item 1 current-item"><span class="progress-count" id="1">1</span><span class="progress-label">Informações do produto</span></li> 
+                    <li class="step-item 2"><span class="progress-count">2</span><span class="progress-label">Upload da imagem</span></li>
+                    <li class="step-item 3"><span class="progress-count">3</span><span class="progress-label">Confirmação</span></li>
                 </ul>
             </div>
-            <div class="product-info">
+            <div class="tab one product-info">
                 <div class="product-name">
                     <label for="name" class="name">Nome do produto</label>
                     <input type="text" id="" name="name" placeholder="Digite o nome do produto" value="">
@@ -289,19 +397,19 @@
                         </div>
                         <div class="char-box">
                             <div class="char-checkbox">
-                                <input type="radio">
+                                <input type="radio" name="cat">
                                 <label>Video jogos</label>
                             </div>
                             <div class="char-checkbox">
-                                <input type="radio">
+                                <input type="radio" name="cat">
                                 <label>Jogos tabuleiro</label>
                             </div>
                             <div class="char-checkbox">
-                                <input type="radio">
+                                <input type="radio" name="cat">
                                 <label>Figuras</label>
                             </div>
                             <div class="char-checkbox">
-                                <input type="radio">
+                                <input type="radio" name="cat">
                                 <label>Disfarces</label>
                             </div>
                         </div>
@@ -312,24 +420,24 @@
                             <p>Estado</p>
                         </div>
                         <div class="char-box">
-                            <div class="char-checkbox">
+                            <div class="char-checkbox" name="est">
                                 <input type="radio">
                                 <label>Selado</label>
                             </div>
                             <div class="char-checkbox">
-                                <input type="radio">
+                                <input type="radio" name="est">
                                 <label>Muito bom</label>
                             </div>
                             <div class="char-checkbox">
-                                <input type="radio">
+                                <input type="radio" name="est">
                                 <label>Bom</label>
                             </div>
                             <div class="char-checkbox">
-                                <input type="radio">
+                                <input type="radio" name="est">
                                 <label>Usado</label>
                             </div>
                             <div class="char-checkbox">
-                                <input type="radio">
+                                <input type="radio" name="est">
                                 <label>Muito usado</label>
                             </div>
                         </div>
@@ -341,11 +449,11 @@
                         </div>
                         <div class="char-box">
                             <div class="char-checkbox">
-                                <input type="radio">
+                                <input type="radio" name="spe">
                                 <label>Sim</label>
                             </div>
                             <div class="char-checkbox">
-                                <input type="radio">
+                                <input type="radio" name="spe">
                                 <label>Não</label>
                             </div>
                         </div>
@@ -357,15 +465,15 @@
                         </div>
                         <div class="char-box">
                             <div class="char-checkbox">
-                                <input type="radio">
+                                <input type="radio" name="lev">
                                 <label>Em loja</label>
                             </div>
                             <div class="char-checkbox">
-                                <input type="radio">
+                                <input type="radio" name="lev">
                                 <label>Envio correios</label>
                             </div>
                             <div class="char-checkbox">
-                                <input type="radio">
+                                <input type="radio" name="lev">
                                 <label>Troca pessoal</label>
                             </div>
                         </div>
@@ -382,6 +490,25 @@
                     <input type="text">
                 </div>
             </div>
+
+            <div class="tab two upload-container invisible">
+                <div class="add-container">
+                    <div class="vertical"></div>
+                    <div class="horizontal"></div>
+                </div>
+                <div class="url-container">
+                    <div class="upload-label">Seleciona uma ou mais imagens para o produto</div>
+                    <div class="upload-input">
+                        <input type="text" id="" name="upload" placeholder="jpeg, png, gif" value="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <button class="back" onclick="changeTabs('backward')">Voltar</button>
+                <button onclick="changeTabs('forward')" style="right:0";">Continuar</button>
+            </div>
+
             
         </div>
     </div>
@@ -405,6 +532,49 @@
 
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/scripts.js"></script>
+    <script>
+        function changeTabs(direction) {
+            var tabs = document.querySelectorAll(".step-item")
+            var current = document.querySelector(".current-item")
+            var tag = 0
+
+            if (direction === 'backward') {
+                tabs = Array.from(tabs)
+                tabs.reverse()
+            }
+
+            for (var tab of tabs) {
+                if (tag === 1) {
+                    tab.classList.add("current-item")
+                    break
+                }
+                if (current.textContent === tab.textContent) {
+                    current.classList.remove("current-item")
+                    tag = 1
+                }
+            }
+
+            current = document.getElementsByClassName("current-item")[0]
+            console.log(current)
+            var invisible = document.querySelector(".invisible")
+            var backButton = document.querySelector(".back");
+            switch (current.classList[1]) {
+                case "1": 
+                    invisible.classList.remove("invisible")
+                    document.querySelector(".tab.two").classList.add("invisible")
+                    invisible = document.querySelector(".invisible")
+                    backButton.style.display = "none"
+                    break
+                case "2":
+                    invisible.classList.remove("invisible")
+                    document.querySelector(".tab.one").classList.add("invisible")
+                    invisible = document.querySelector(".invisible")
+                    backButton.style.display = "block";
+                    break            
+            }
+        }
+
+    </script>
 
 </body>
 
