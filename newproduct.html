@@ -364,7 +364,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                     <li class="nav-item"><a class="nav-link" href="perfil-fav.html">Perfil</a></li>
-                    <li class="nav-item"><a class="nav-link" href="">Produtos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="catalog.html">Produtos</a></li>
                     <li class="nav-item"><a class="nav-link" href="newproduct.html">Vender</a></li>
                 </ul>
                 <form class="d-flex" role="search"><input class="form-control me-2" type="search" placeholder="Search"
@@ -629,7 +629,7 @@
         document.getElementById("form-container").addEventListener("submit", function(event){
             event.preventDefault()
 
-            let url = "http://localhost:9090/new-product";
+            let url = "https://rarefinds.herokuapp.com/new-product";
             let formData = new FormData(event.target);
             let data = Object.fromEntries(formData.entries());
 
