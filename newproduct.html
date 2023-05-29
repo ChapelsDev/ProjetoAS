@@ -545,48 +545,6 @@
 
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/scripts.js"></script>
-    <!-- <script>
-        function changeTabs(direction) {
-            var tabs = document.querySelectorAll(".step-item")
-            var current = document.querySelector(".current-item")
-            var tag = 0
-
-            if (direction === 'backward') {
-                tabs = Array.from(tabs)
-                tabs.reverse()
-            }
-
-            for (var tab of tabs) {
-                if (tag === 1) {
-                    tab.classList.add("current-item")
-                    break
-                }
-                if (current.textContent === tab.textContent) {
-                    current.classList.remove("current-item")
-                    tag = 1
-                }
-            }
-
-            current = document.getElementsByClassName("current-item")[0]
-            console.log(current)
-            var invisible = document.querySelector(".invisible")
-            var backButton = document.querySelector(".back");
-            switch (current.classList[1]) {
-                case "1": 
-                    invisible.classList.remove("invisible")
-                    document.querySelector(".tab.two").classList.add("invisible")
-                    invisible = document.querySelector(".invisible")
-                    backButton.style.display = "none"
-                    break
-                case "2":
-                    invisible.classList.remove("invisible")
-                    document.querySelector(".tab.one").classList.add("invisible")
-                    invisible = document.querySelector(".invisible")
-                    backButton.style.display = "block";
-                    break            
-            }
-        }
-    </script> -->
     <script>
         function changeTabs(direction) {
             var tabs = Array.from(document.querySelectorAll(".step-item"));
@@ -629,7 +587,7 @@
         document.getElementById("form-container").addEventListener("submit", function(event){
             event.preventDefault()
 
-            let url = "https://rarefinds.herokuapp.com/new-product";
+            let url = "https://rarefinds.herokuapp.com/products/new";
             let formData = new FormData(event.target);
             let data = Object.fromEntries(formData.entries());
 
