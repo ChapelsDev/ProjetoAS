@@ -59,7 +59,7 @@
 	document.getElementsByTagName("form")[0].addEventListener("submit", function(event) {
 		event.preventDefault();
 
-		let url = "http://localhost:9090/auth/login"
+		let url = "http://rarefinds.herokuapp.com/auth/login"
 		let formData = new FormData(event.target);
 		let data = Object.fromEntries(formData.entries());
 		let json = {
