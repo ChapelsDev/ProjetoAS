@@ -266,7 +266,7 @@
         loadingSpinner.classList.add('loading-spinner');
         catalogContainer.appendChild(loadingSpinner);
         
-        let url = "https://rarefinds.herokuapp.com/products"
+        let url = "https://rarefinds.herokuapp.com/products/"
         fetch(url)
         .then(response => response.json())
         .then(data => {
