@@ -194,7 +194,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('id');
 
-        fetch(`http://localhost:9090/products/${productId}`)
+        fetch(`https://rarefinds.herokuapp.com/products/${productId}`)
             .then(response => response.json())
             .then(data => {
                 let productName = document.getElementById('product_name');
