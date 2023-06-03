@@ -52,6 +52,14 @@
             box-shadow: 0 15px 25px rgba(0,0,0,0.1);
         }
 
+        .item-container:hover {
+            background-color: #B0D9D9; /* Choose the color you prefer */
+            box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.3); /* Changes the box shadow */
+            transform: scale(1.02); /* Slightly scales the item */
+            transition: all 0.5s ease; /* Adds a smooth transition to all properties */
+        }
+        
+
 
         .item-info {
             display: flex;
@@ -82,6 +90,8 @@
             justify-content: space-around;
             align-items: baseline;
             margin-bottom: 5px;
+            margin-left: 5px;
+            margin-right: 5px;
         }
 
         .filters-container {
@@ -107,6 +117,7 @@
             margin-right: 10px;
             box-shadow: 0 15px 25px rgba(0,0,0,0.1);
             background-color: #fff;
+            border: 1px solid #000;
         }
 
         .filter-option {
@@ -142,15 +153,15 @@
     </style>
 </head>
 
-<body class="bg-light flex-column d-flex min-vh-100">
-    <nav class="navbar navbar-light navbar-expand-lg bg-light">
+<body class="bg-light flex-column d-flex min-vh-100" onload="checkLogin()">
+    <nav class="navbar navbar-light navbar-expand-lg bg-light" id="unlogged">
         <div class="container px-4 px-lg-5"><a class="navbar-brand" href="homepage.html"><img src="Capturar.PNG"
                     height="44px"></a><button data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                    <li class="nav-item"><a class="nav-link" href="login.html">Perfil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="perfil-fav.html">Perfil</a></li>
                     <li class="nav-item"><a class="nav-link" href="catalog.html">Produtos</a></li>
                     <li class="nav-item"><a class="nav-link" href="newproduct.html">Vender</a></li>
                 </ul>
@@ -161,52 +172,43 @@
                             class="badge rounded-pill bg-dark text-white ms-1"></span></a></form>
             </div>
         </div>
+    </nav>
 
+    <nav class="navbar navbar-light navbar-expand-lg bg-light" id="logged">
+        <div class="container px-4 px-lg-5"><a class="navbar-brand" href="homepage.html"><img src="Capturar.PNG"
+                    height="44px"></a><button data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                    <li class="nav-item"><a class="nav-link" href="perfil-fav.html">Perfil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="catalog.html">Produtos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="newproduct.html">Vender</a></li>
+                </ul>
+                <form class="d-flex" role="search"><input class="form-control me-2" type="search" placeholder="Search"
+                        aria-label="Search"><button class="btn btn-outline-dark mx-1" type="submit"><img
+                            src="assets/img/transferir.png" height="20px"></button></form>
+            </div>
+            <div class="dropdown text-end">
+                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <img src="images/no_user.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                </a>
+                <ul class="dropdown-menu text-small" style="">
+                    <li><a class="dropdown-item" href="perfil-fav.html">Perfil</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="homepage.html" onclick="signOut();">Sign out</a></li>
+                </ul>
+            </div>
+        </div>
     </nav>
 
     <div class="main-container">
 
         <div class="catalog-container">
             <h2>Itens disponíveis:</h2>
-            <!-- <div class="item-container">
-                <img class="product-img" src="pokemon.jpg"">
-                <div class="item-info">
-                    <h3 class="name">Carta</h3>
-                    <p class="description">Carta rara de pokemon</p>
-                    <div class="seller-price">
-                        <p class="seller">João</p>
-                        <h4 class="price">2.99€</h4>
-                    </div>
-                </div>
-                <img src="images/save.png" style="width:50px">
-            </div>
-
-            <div class="item-container">
-                <img class="product-img" src="pokemon.jpg">
-                <div class="item-info">
-                    <h3 class="name">Carta</h3>
-                    <p class="description">Carta rara de pokemon</p>
-                    <div class="seller-price">
-                        <p class="seller">João</p>
-                        <h4 class="price">3€</h4>
-                    </div>
-                </div>
-                <img src="images/save.png" style="width:50px">
-            </div>
-
-            <div class="item-container">
-                <img class="product-img" src="pokemon.jpg">
-                <div class="item-info">
-                    <h3 class="name">Carta</h3>
-                    <p class="description">Carta rara de pokemon</p>
-                    <div class="seller-price">
-                        <p class="seller">João</p>
-                        <h4 class="price">3€</h4>
-                    </div>
-                </div>
-                <img src="images/save.png" style="width:50px">
-            </div> -->
-
         </div>
 
         <div class="filters-container">
@@ -261,6 +263,11 @@
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/scripts.js"></script>
     <script>
+        function signOut() {
+            localStorage.removeItem('token');
+            window.location.href = 'homepage.html';
+        }
+
         let catalogContainer = document.getElementsByClassName('catalog-container')[0];
         let loadingSpinner = document.createElement('div');
         loadingSpinner.classList.add('loading-spinner');
@@ -274,6 +281,7 @@
 
             data.reverse();
             data.forEach(item => {
+                console.log(item.owner_id);
                 let itemContainer = document.createElement('div');
                 itemContainer.classList.add('item-container');
 
@@ -296,7 +304,16 @@
                 sellerPrice.classList.add('seller-price');
 
                 let seller = document.createElement('h4');
-                seller.textContent = "Jonas";
+
+                fetch(`https://rarefinds.herokuapp.com/auth/user/${item.owner_id}`)
+                .then(response => response.json())
+                .then(data => {
+                    let sellerName = `${data.name} ${data.last_name}`;
+                    seller.textContent = sellerName;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                })
 
                 let price = document.createElement('h4');
                 price.textContent = item.price + '€';
@@ -324,6 +341,15 @@
             };
             img.src = byteString;
         }
+    
+        function checkLogin() {
+            if (localStorage.getItem('token')) {
+                document.getElementById("unlogged").style.display = "none";
+            } else {
+                document.getElementById("logged").style.display = "none";
+            }
+        }
+        
     </script>
 
 </body>
