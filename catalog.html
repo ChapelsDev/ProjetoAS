@@ -50,6 +50,7 @@
             border-radius: 0 75px 75px 0;
             height: 200px;
             box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+            cursor: pointer;
         }
 
         .item-container:hover {
@@ -153,7 +154,7 @@
     </style>
 </head>
 
-<body class="bg-light flex-column d-flex min-vh-100" onload="checkLogin()">
+<body class="bg-light flex-column d-flex min-vh-100">
     <nav class="navbar navbar-light navbar-expand-lg bg-light" id="unlogged">
         <div class="container px-4 px-lg-5"><a class="navbar-brand" href="homepage.html"><img src="Capturar.PNG"
                     height="44px"></a><button data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -165,9 +166,8 @@
                     <li class="nav-item"><a class="nav-link" href="catalog.html">Produtos</a></li>
                     <li class="nav-item"><a class="nav-link" href="newproduct.html">Vender</a></li>
                 </ul>
-                <form class="d-flex" role="search"><input class="form-control me-2" type="search" placeholder="Search"
-                        aria-label="Search"><button class="btn btn-outline-dark mx-1" type="submit"><img
-                            src="assets/img/transferir.png" height="20px"></button></form>
+                <form class="d-flex" role="search"><input class="form-control me-2" type="search" placeholder="Procurar produto"
+                        name="search" id="search_box"></form>
                 <form class="d-flex"><a class="btn btn-outline-dark mx-1" role="button" href="Login.html"> Login <span
                             class="badge rounded-pill bg-dark text-white ms-1"></span></a></form>
             </div>
@@ -185,9 +185,8 @@
                     <li class="nav-item"><a class="nav-link" href="catalog.html">Produtos</a></li>
                     <li class="nav-item"><a class="nav-link" href="newproduct.html">Vender</a></li>
                 </ul>
-                <form class="d-flex" role="search"><input class="form-control me-2" type="search" placeholder="Search"
-                        aria-label="Search"><button class="btn btn-outline-dark mx-1" type="submit"><img
-                            src="assets/img/transferir.png" height="20px"></button></form>
+                <form class="d-flex" role="search" id="search"><input class="form-control me-2" type="search" placeholder="Procurar produto"
+                        aria-label="Search" name="search" id="search_box"></form>
             </div>
             <div class="dropdown text-end">
                 <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
@@ -263,6 +262,10 @@
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/scripts.js"></script>
     <script>
+        window.onload = function() {
+            document.getElementById('search_box').value = '';
+            checkLogin();
+        }
         function signOut() {
             localStorage.removeItem('token');
             window.location.href = 'homepage.html';
@@ -280,10 +283,59 @@
             catalogContainer.removeChild(loadingSpinner);
 
             data.reverse();
+            createCatalog(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            catalogContainer.removeChild(loadingSpinner);
+            catalogContainer.textContent = 'Falha ao requerir dados. Por favor, tente novamente.'
+        });
+        
+        function byteStringToImage(byteString, callback) {
+            let img = new Image();
+            img.onload = function() {
+                callback(img);
+            };
+            img.src = byteString;
+        }
+    
+        function checkLogin() {
+            if (localStorage.getItem('token')) {
+                document.getElementById("unlogged").style.display = "none";
+            } else {
+                document.getElementById("logged").style.display = "none";
+            }
+        }
+
+        let debouncedInputHandler = debounce(function(event) {
+            event.preventDefault();
+
+            let formData = new FormData(event.target.form);
+            let formDataEntries = Object.fromEntries(formData.entries());
+
+            fetch(`http://localhost:9090/products/search?q=${formDataEntries.search}`)
+            .then(response => response.json())
+            .then(data => {
+                catalogContainer.innerHTML = '';
+                data.reverse();
+                createCatalog(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            })
+        }, 300);
+
+        document.getElementById('search_box').addEventListener('input', debouncedInputHandler);
+        document.getElementById('search_box').addEventListener('submit', debouncedInputHandler);
+
+
+        function createCatalog(data) {
             data.forEach(item => {
-                console.log(item.owner_id);
                 let itemContainer = document.createElement('div');
                 itemContainer.classList.add('item-container');
+                itemContainer.onclick = function() {
+                    window.location.href = `product.html?id=${item._id}`;
+                }
 
                 let itemImg = document.createElement('img');
                 byteStringToImage(item.image, function(image) {
@@ -327,29 +379,23 @@
                 itemContainer.appendChild(itemInfo);
                 catalogContainer.appendChild(itemContainer);
             });
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            catalogContainer.removeChild(loadingSpinner);
-            catalogContainer.textContent = 'Falha ao requerir dados. Por favor, tente novamente.'
-        });
+        }
+
+        function debounce(func, wait) {
+            let timeout;
         
-        function byteStringToImage(byteString, callback) {
-            let img = new Image();
-            img.onload = function() {
-                callback(img);
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+        
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
             };
-            img.src = byteString;
-        }
-    
-        function checkLogin() {
-            if (localStorage.getItem('token')) {
-                document.getElementById("unlogged").style.display = "none";
-            } else {
-                document.getElementById("logged").style.display = "none";
-            }
         }
         
+
     </script>
 
 </body>

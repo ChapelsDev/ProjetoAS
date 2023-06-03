@@ -551,6 +551,8 @@
                 sessionStorage.setItem('redirectAfterLogin', window.location.href);
 
                 window.location.href = 'Login.html';
+            } else {
+                sessionStorage.removeItem('redirectAfterLogin');
             }
         }
 
