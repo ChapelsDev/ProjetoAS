@@ -175,28 +175,37 @@
             sessionStorage.setItem('redirectProfile', window.location.href);
 
             window.location.href = 'Login.html';
+        } else {
+            sessionStorage.removeItem('redirectProfile');
+            
+            let url = "https://rarefinds.herokuapp.com/auth/user"
+            fetch(url, {
+              method: 'GET',
+              headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                'Content-Type': 'application/json',
+              },
+            })
+            .then(response => {
+              if (response.status === 401) {
+                throw new Error('Status: 401 - Unauthorized');
+              }
+              return response.json();
+            })
+            .then(data => {
+              let profileName = document.getElementById('profile-name');
+              profileName.textContent = `${data.name} ${data.last_name}`;
+      
+              let phoneNumber = document.getElementById('phone-number');
+              phoneNumber.textContent = `+${data.phone_number}`;
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              console.log("i'm here");
+              signOut();
+            });
+          }
         }
-      }
-
-      let url = "https://rarefinds.herokuapp.com/auth/user"
-      fetch(url, {
-        method: 'GET',
-        headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem('token'),
-          'Content-Type': 'application/json',
-        },
-      })
-      .then(response => response.json())
-      .then(data => {
-        let profileName = document.getElementById('profile-name');
-        profileName.textContent = `${data.name} ${data.last_name}`;
-
-        let phoneNumber = document.getElementById('phone-number');
-        phoneNumber.textContent = `+${data.phone_number}`;
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
 
       function signOut() {
         localStorage.removeItem('token');
