@@ -364,7 +364,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                     <li class="nav-item"><a class="nav-link" href="perfil-fav.html">Perfil</a></li>
-                    <li class="nav-item"><a class="nav-link" href="catalog_logado.html">Produtos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="catalog.html">Produtos</a></li>
                     <li class="nav-item"><a class="nav-link" href="newproduct.html">Vender</a></li>
                 </ul>
                 <form class="d-flex" role="search"><input class="form-control me-2" type="search" placeholder="Search"
@@ -381,7 +381,7 @@
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="homepage.html">Sign out</a></li>
+                    <li><a onclick="signOut();" class="dropdown-item">Sign out</a></li>
                 </ul>
             </div>
         </div>
@@ -537,7 +537,7 @@
             <ul class="nav justify-content-end col-md-4">
                 <li class="nav-item"><a class="nav-link px-2 text-body-secondary"
                         href="perfil-fav.html">Perfil</a></li>
-                <li class="nav-item"><a class="nav-link px-2 text-body-secondary" href="catalog_logado.html">Produtos</a></li>
+                <li class="nav-item"><a class="nav-link px-2 text-body-secondary" href="catalog.html">Produtos</a></li>
                 <li class="nav-item"><a class="nav-link px-2 text-body-secondary" href="newproduct.html">Vender</a></li>
             </ul>
         </footer>
@@ -546,6 +546,19 @@
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/scripts.js"></script>
     <script>
+        window.onload = function() {
+            if (localStorage.getItem('token') === null) {
+                sessionStorage.setItem('redirectAfterLogin', window.location.href);
+
+                window.location.href = 'Login.html';
+            }
+        }
+
+        function signOut() {
+            localStorage.removeItem('token');
+            window.location.href = 'homepage.html';
+        }
+
         function changeTabs(direction) {
             var tabs = Array.from(document.querySelectorAll(".step-item"));
             var current = document.querySelector(".current-item");
@@ -587,26 +600,37 @@
         document.getElementById("form-container").addEventListener("submit", function(event){
             event.preventDefault()
 
-            let url = "https://rarefinds.herokuapp.com/products/new";
+            let urlUser = "https://rarefinds.herokuapp.com/auth/user";
+            let urlProducts = "https://rarefinds.herokuapp.com/products/new";
             let formData = new FormData(event.target);
-            let data = Object.fromEntries(formData.entries());
+            let formDataEntries = Object.fromEntries(formData.entries());
 
-            console.log(data.cat)
+            fetch(urlUser, {
+              method: 'GET',
+              headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                'Content-Type': 'application/json',
+              },
+            })
+            .then(response => response.json())
+            .then(data => {
+              let userId = data._id;
 
-            imageToByteString(data.upload, function(byteString) {
+              imageToByteString(formDataEntries.upload, function(byteString) {
                 // Update the JSON object with the byte string
                 let json = {
-                  name: data.name,
-                  description: data.description,
-                  price: parseFloat(data.price),
+                  name: formDataEntries.name,
+                  description: formDataEntries.description,
+                  price: parseFloat(formDataEntries.price),
                   image: byteString, // Use the converted byte string here
-                  type: data.cat,
-                  condition: data.est,
-                  limited_edition: data.spe === "Sim" ? true : false,
+                  type: formDataEntries.cat,
+                  condition: formDataEntries.est,
+                  limited_edition: formDataEntries.spe === "Sim" ? true : false,
+                  owner_id: userId,
                 };
             
                 // Send the JSON data to the backend
-                fetch(url, {
+                fetch(urlProducts, {
                     method: "POST",
                     headers: {
                       "Content-Type": "application/json"
@@ -615,15 +639,19 @@
                   })
                   .then(response => response.json())
                   .then(data => {
-                    console.log(data);
+
                   })
                   .catch(error => {
-                    console.error("Error:", error);
+                    console.error("Error:", error);a
                   });
             
                 event.target.reset();
               });
-        })
+            })
+            .catch(error => {
+              console.error('Error:', error);
+            });
+        });
 
         let uploadBtn = document.getElementById("upload");
         let previewImage = document.getElementById("preview");
@@ -660,7 +688,6 @@
         
             reader.readAsDataURL(imageFile);
         }
-        
     </script>
     
 

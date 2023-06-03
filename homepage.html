@@ -22,17 +22,17 @@
     <link rel="manifest" href="/site.webmanifest">
 </head>
 
-<body class="bg-light flex-column d-flex min-vh-100">
-    <nav class="navbar navbar-light navbar-expand-lg bg-light">
+<body class="bg-light flex-column d-flex min-vh-100" onload="checkLogin();">
+    <nav class="navbar navbar-light navbar-expand-lg bg-light" id="unlogged">
         <div class="container px-4 px-lg-5"><a class="navbar-brand" href="homepage.html"><img src="Capturar.PNG"
                     height="44px"></a><button data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                    <li class="nav-item"><a class="nav-link" href="Login.html">Perfil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="perfil-fav.html">Perfil</a></li>
                     <li class="nav-item"><a class="nav-link" href="catalog.html">Produtos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="Login.html">Vender</a></li>
+                    <li class="nav-item"><a class="nav-link" href="newproduct.html">Vender</a></li>
                 </ul>
                 <form class="d-flex" role="search"><input class="form-control me-2" type="search" placeholder="Search"
                         aria-label="Search"><button class="btn btn-outline-dark mx-1" type="submit"><img
@@ -41,7 +41,37 @@
                             class="badge rounded-pill bg-dark text-white ms-1"></span></a></form>
             </div>
         </div>
+    </nav>
 
+    <nav class="navbar navbar-light navbar-expand-lg bg-light" id="logged">
+        <div class="container px-4 px-lg-5"><a class="navbar-brand" href="homepage.html"><img src="Capturar.PNG"
+                    height="44px"></a><button data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                    <li class="nav-item"><a class="nav-link" href="perfil-fav.html">Perfil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="catalog.html">Produtos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="newproduct.html">Vender</a></li>
+                </ul>
+                <form class="d-flex" role="search"><input class="form-control me-2" type="search" placeholder="Search"
+                        aria-label="Search"><button class="btn btn-outline-dark mx-1" type="submit"><img
+                            src="assets/img/transferir.png" height="20px"></button></form>
+            </div>
+            <div class="dropdown text-end">
+                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <img src="images/no_user.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                </a>
+                <ul class="dropdown-menu text-small" style="">
+                    <li><a class="dropdown-item" href="perfil-fav.html">Perfil</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="homepage.html" onclick="signOut();">Sign out</a></li>
+                </ul>
+            </div>
+        </div>
     </nav>
     <header class="bg-light">
         <div id="carouselExampleCaptions" class="carousel slide">
@@ -131,6 +161,20 @@
             </div>
             <script src="assets/bootstrap/js/bootstrap.min.js"></script>
             <script src="assets/js/scripts.js"></script>
+            <script>
+                function checkLogin() {
+                    if (localStorage.getItem('token')) {
+                        document.getElementById("unlogged").style.display = "none";
+                    } else {
+                        document.getElementById("logged").style.display = "none";
+                    }
+                }
+
+                function signOut() {
+                    localStorage.removeItem('token');
+                    window.location.href = 'homepage.html';
+                }
+            </script>
 </body>
 
 </html>

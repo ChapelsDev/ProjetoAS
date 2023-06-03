@@ -78,8 +78,17 @@
 		})
 		.then(response => response.json())
 		.then(data => {
+			localStorage.setItem('token', data.token);
 			console.log(data);
-			window.location.href = "/hplogado.html";
+			if (sessionStorage.getItem('redirectAfterLogin')) {
+				window.location.href = sessionStorage.getItem('redirectAfterLogin');
+				sessionStorage.removeItem('redirectAfterLogin');
+			} else if (sessionStorage.getItem('redirectProfile')) {
+				window.location.href = sessionStorage.getItem('redirectProfile');
+				sessionStorage.removeItem('redirectProfile');
+			} else {
+				window.location.href = "/homepage.html";
+			}
 		})
 		.catch(error => {
 			console.error("Error:", error);
