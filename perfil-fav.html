@@ -18,6 +18,15 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
     <style>
+
+      .stars-prof .fa-star:nth-child(1),
+      .stars-prof .fa-star:nth-child(2) ,
+      .stars-prof .fa-star:nth-child(3),
+      .stars-prof .fa-star:nth-child(4),
+      .stars-prof .fa-star:nth-child(5){
+        color: black;
+      }
+
       .product-item {
         cursor: pointer;
       }
@@ -50,6 +59,23 @@
       @keyframes spin {
           0% {transform: rotate(0deg);}
           100% {transform: rotate(360deg);}
+      }
+
+      #imageList {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      #imageList img {
+        width: 200px;
+        height: 200px;
+        margin-bottom: 10px;
+      }
+      
+      #imageList hr {
+        width: 80%;
+        margin: 10px 0;
       }
     </style>
 </head>
@@ -94,7 +120,7 @@
 
             <div class="ratings">
                 <h3>Rating</h3>
-                <div class="stars">
+                <div class="stars-prof">
                     <span class="fa fa-star"></span>
                     <span class="fa fa-star"></span>
                     <span class="fa fa-star"></span>
@@ -106,13 +132,35 @@
             <div class="level-bar" style="margin-top: 25px">
                 <h3>Level 1</h3>
                 <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar" role="progressbar" style="width: 5%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
             </div>
     
             <div class="emblem-spot" style="margin-top: 50px">
-                <button><img src="images/baby-emblem.png" alt="Product 2" style="height: 100px; width: 100px; align-items: center; "></button>
+              <button id="emblem-button" data-bs-toggle="modal" data-bs-target="#imageModal">
+                <img src="images/baby-emblem.png" alt="Product 2" style="height: 100px; width: 100px; align-items: center; ">
+              </button>
+            </div>
+            <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel">List of Images</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div id="imageList">
+                      <img src="images/baby-emblem.png" alt="Image 1" style="width: 200px; height: 200px;">
+                      <hr>
+                      <img src="images/arcanine-emblem.jpg" alt="Image 2" style="width: 200px; height: 200px;">
+                      <hr>
+                      <img src="images/berserk-emblem.jpg" alt="Image 3" style="width: 200px; height: 200px;">
+                      <!-- Add more images as needed -->
+                    </div>
+                  </div>
+                </div>
               </div>
+            </div>
         </div>
 
         <div class="product-list-container shadow-lg p-3 mb-5 border border-top-0 border-4" style="margin-left: 20px ">
