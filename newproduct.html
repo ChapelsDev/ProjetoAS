@@ -357,7 +357,7 @@
 
 <body class="bg-light flex-column d-flex min-vh-100">
     <nav class="navbar navbar-light navbar-expand-lg bg-light">
-        <div class="container px-4 px-lg-5"><a class="navbar-brand" href="hplogado.html"><img src="Capturar.PNG"
+        <div class="container px-4 px-lg-5"><a class="navbar-brand" href="homepage.html"><img src="Capturar.PNG"
                     height="44px"></a><button data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -367,8 +367,8 @@
                     <li class="nav-item"><a class="nav-link" href="catalog.html">Produtos</a></li>
                     <li class="nav-item"><a class="nav-link" href="newproduct.html">Vender</a></li>
                 </ul>
-                <form class="d-flex" role="search"><input class="form-control me-2" type="search" placeholder="Search"
-                        aria-label="Search"><button class="btn btn-outline-dark mx-1" type="submit"><img
+                <form id="search_form" class="d-flex" role="search"><input class="form-control me-2" type="search" placeholder="Procurar produto"
+                        aria-label="Search" name="search"><button class="btn btn-outline-dark mx-1" type="submit"><img
                             src="assets/img/transferir.png" height="20px"></button></form>
             </div>
             <div class="dropdown text-end">
@@ -400,7 +400,7 @@
             <div class="tab one product-info">
                 <div class="product-name">
                     <label for="name" class="name">Nome do produto</label>
-                    <input type="text" id="" name="name" placeholder="Digite o nome do produto" value="">
+                    <input type="text" id="" name="name" placeholder="Digite o nome do produto" value="" >
                 </div>
                 <div class="product-char">
                     <div class="char-section">
@@ -493,7 +493,7 @@
                 </div>
                 <div class="product-name" style="width: 500px">
                     <label for="price" class="name">Preço do produto</label>
-                    <input type="text" id="" name="price" placeholder="€" value="" style="width: 150px;">
+                    <input type="number" id="" name="price" placeholder="€" value="" style="width: 150px;">
                     <p style="margin: 0;">XP = preço/10</p>
                 </div>
 
@@ -639,9 +639,15 @@
                     },
                     body: JSON.stringify(json)
                   })
-                  .then(response => response.json())
+                  .then(response => {
+                    if (!response.ok) {
+                        alert('Todos os campos devem ser preenchidos.');
+                        window.location.reload();
+                        throw new Error(response.text);
+                    }
+                  })
                   .then(data => {
-
+                    window.location.href = '/catalog.html';
                   })
                   .catch(error => {
                     console.error("Error:", error);a
@@ -690,6 +696,16 @@
         
             reader.readAsDataURL(imageFile);
         }
+
+        document.getElementById('search_form').addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            let formData = new FormData(event.target);
+            let formDataEntries = Object.fromEntries(formData.entries());
+
+            window.location.href = `catalog.html?q=${formDataEntries.search}`;
+        });
+        
     </script>
     
 

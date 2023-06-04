@@ -86,8 +86,8 @@
     </style>
 </head>
 
-<body class="bg-light flex-column d-flex min-vh-100">
-    <nav class="navbar navbar-light navbar-expand-lg bg-light">
+<body class="bg-light flex-column d-flex min-vh-100" onload="checkLogin();">
+    <nav class="navbar navbar-light navbar-expand-lg bg-light" id="unlogged">
         <div class="container px-4 px-lg-5"><a class="navbar-brand" href="homepage.html"><img src="Capturar.PNG"
                     height="44px"></a><button data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -98,8 +98,28 @@
                     <li class="nav-item"><a class="nav-link" href="catalog.html">Produtos</a></li>
                     <li class="nav-item"><a class="nav-link" href="newproduct.html">Vender</a></li>
                 </ul>
-                <form class="d-flex" role="search"><input class="form-control me-2" type="search" placeholder="Search"
-                        aria-label="Search"><button class="btn btn-outline-dark mx-1" type="submit"><img
+                <form id="search_form" class="d-flex" role="search"><input class="form-control me-2" type="search" placeholder="Procurar produto"
+                        aria-label="Search" name="search"><button class="btn btn-outline-dark mx-1" type="submit"><img
+                            src="assets/img/transferir.png" height="20px"></button></form>
+                <form class="d-flex"><a class="btn btn-outline-dark mx-1" role="button" href="Login.html"> Login <span
+                            class="badge rounded-pill bg-dark text-white ms-1"></span></a></form>
+            </div>
+        </div>
+    </nav>
+
+    <nav class="navbar navbar-light navbar-expand-lg bg-light" id="logged">
+        <div class="container px-4 px-lg-5"><a class="navbar-brand" href="homepage.html"><img src="Capturar.PNG"
+                    height="44px"></a><button data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                    <li class="nav-item"><a class="nav-link" href="perfil-fav.html">Perfil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="catalog.html">Produtos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="newproduct.html">Vender</a></li>
+                </ul>
+                <form id="search_form" class="d-flex" role="search"><input class="form-control me-2" type="search" placeholder="Procurar produto"
+                        aria-label="Search" name="search"><button class="btn btn-outline-dark mx-1" type="submit"><img
                             src="assets/img/transferir.png" height="20px"></button></form>
             </div>
             <div class="dropdown text-end">
@@ -112,11 +132,10 @@
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="homepage.html">Sign out</a></li>
+                    <li><a class="dropdown-item" href="homepage.html" onclick="signOut();">Sign out</a></li>
                 </ul>
             </div>
         </div>
-
     </nav>
     <div class="container d-flex">
         <div class="product-box shadow-lg p-3 mb-5 border border-top-0 border-4">
@@ -191,6 +210,14 @@
     <script src="assets/js/scripts.js"></script>
     <script src="js1/perfil.js"></script>
     <script>
+        function checkLogin() {
+            if (localStorage.getItem('token')) {
+                document.getElementById("unlogged").style.display = "none";
+            } else {
+                document.getElementById("logged").style.display = "none";
+            }
+        }
+
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('id');
 
@@ -246,6 +273,15 @@
             };
             img.src = byteString;
         }
+
+        document.getElementById('search_form').addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            let formData = new FormData(event.target);
+            let formDataEntries = Object.fromEntries(formData.entries());
+
+            window.location.href = `catalog.html?q=${formDataEntries.search}`;
+        });
     </script>
 
 </body>
