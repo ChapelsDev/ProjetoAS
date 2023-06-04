@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Homepage</title>
+    <title>index</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400|Roboto:300,400,700">
     <link rel="stylesheet" href="assets/css/Articles-Cards-images.css">
@@ -156,7 +156,7 @@
 
 <body class="bg-light flex-column d-flex min-vh-100">
     <nav class="navbar navbar-light navbar-expand-lg bg-light" id="unlogged">
-        <div class="container px-4 px-lg-5"><a class="navbar-brand" href="homepage.html"><img src="Capturar.PNG"
+        <div class="container px-4 px-lg-5"><a class="navbar-brand" href="index.html"><img src="Capturar.PNG"
                     height="44px"></a><button data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -175,7 +175,7 @@
     </nav>
 
     <nav class="navbar navbar-light navbar-expand-lg bg-light" id="logged">
-        <div class="container px-4 px-lg-5"><a class="navbar-brand" href="homepage.html"><img src="Capturar.PNG"
+        <div class="container px-4 px-lg-5"><a class="navbar-brand" href="index.html"><img src="Capturar.PNG"
                     height="44px"></a><button data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -198,7 +198,7 @@
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="homepage.html" onclick="signOut();">Sign out</a></li>
+                    <li><a class="dropdown-item" href="index.html" onclick="signOut();">Sign out</a></li>
                 </ul>
             </div>
         </div>
@@ -249,7 +249,7 @@
             style="margin-top: 0px;margin-bottom: -30px;padding-bottom: 1px;">
             <p class="col-md-4 mb-0 text-body-secondary">© 2023 Company, Inc</p><a
                 class="d-flex justify-content-center align-items-center me-md-auto col-md-4 mb-3 mb-md-0 link-body-emphasis text-decoration-none"
-                href="homepage.html"><img src="Capturar.PNG" height="44px"></a>
+                href="index.html"><img src="Capturar.PNG" height="44px"></a>
             <ul class="nav justify-content-end col-md-4">
                 <li class="nav-item"><a class="nav-link px-2 text-body-secondary"
                         href="perfil-fav.html">Perfil</a></li>
@@ -276,7 +276,7 @@
         }
         function signOut() {
             localStorage.removeItem('token');
-            window.location.href = 'homepage.html';
+            window.location.href = 'index.html';
         }
 
         let catalogContainer = document.getElementsByClassName('catalog-container')[0];
