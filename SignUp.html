@@ -24,6 +24,25 @@
 
     <!-- Main CSS-->
     <link href="css1/main.css" rel="stylesheet" media="all">
+    <style>
+        .btn:disabled {
+            background-color: #ddd;
+            cursor: not-allowed;
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: texfield;
+            appearance: textfield;
+        }
+
+    </style>
 </head>
 
 <body>
@@ -74,7 +93,7 @@
                             <div class="name">Password</div>
                             <div class="value">
                                 <div class="input-group">
-                                    <input class="input--style-5" type="password" name="password">
+                                    <input class="input--style-5" type="password" name="password" minlength="8">
                                 </div>
                             </div>
                         </div>
@@ -84,13 +103,13 @@
                                 <div class="row row-refine">
                                     <div class="col-3">
                                         <div class="input-group-desc">
-                                            <input class="input--style-5" type="text" name="area_code">
+                                            <input class="input--style-5" type="number" name="area_code">
                                             <label class="label--desc">Código de País</label>
                                         </div>
                                     </div>
                                     <div class="col-9">
                                         <div class="input-group-desc">
-                                            <input class="input--style-5" type="text" name="phone">
+                                            <input class="input--style-5" type="number" name="phone">
                                             <label class="label--desc">Número de Telemóvel</label>
                                         </div>
                                     </div>
@@ -122,6 +141,34 @@
     <script src="vendor/datepicker/moment.min.js"></script>
     <script src="vendor/datepicker/daterangepicker.js"></script> -->
     <script>
+        let inputs = document.querySelectorAll('input');
+        let btn = document.querySelector('.btn');
+
+        inputs.forEach(input =>{
+            input.addEventListener('input', checkFields);
+        });
+
+        function checkFields() {
+            let allFilled = true;
+
+            inputs.forEach(input => {
+                if (input.type !== 'radio' && input.value === '') {
+                    allFilled = false;
+                } else if(input.type === 'radio' && !input.checked) {
+                    allFilled = false;
+                }
+            });
+
+            if (allFilled) {
+                btn.removeAttribute('disabled');
+            } else {
+                btn.setAttribute('disabled', 'true');
+            }
+        }
+
+        checkFields();
+
+
         document.getElementsByTagName("form")[0].addEventListener("submit", function(event) {
             event.preventDefault();
 
@@ -144,10 +191,16 @@
                   },
                 body: JSON.stringify(json)
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    alert('Ocorreu um erro.');
+                    window.location.reload();
+                    throw new Error(response.text);
+                }
+                return response.json();
+            })
             .then(data => {
-                console.log(data);
-                window.location.href = "/homepage.html";
+                window.location.href = "/Login.html";
             })
             .catch(error => {
                 console.error("Error:", error);

@@ -34,8 +34,8 @@
                     <li class="nav-item"><a class="nav-link" href="catalog.html">Produtos</a></li>
                     <li class="nav-item"><a class="nav-link" href="newproduct.html">Vender</a></li>
                 </ul>
-                <form class="d-flex" role="search"><input class="form-control me-2" type="search" placeholder="Search"
-                        aria-label="Search"><button class="btn btn-outline-dark mx-1" type="submit"><img
+                <form id="search_form" class="d-flex" role="search"><input class="form-control me-2" type="search" placeholder="Procurar produto"
+                        aria-label="Search" name="search"><button class="btn btn-outline-dark mx-1" type="submit"><img
                             src="assets/img/transferir.png" height="20px"></button></form>
                 <form class="d-flex"><a class="btn btn-outline-dark mx-1" role="button" href="Login.html"> Login <span
                             class="badge rounded-pill bg-dark text-white ms-1"></span></a></form>
@@ -54,8 +54,8 @@
                     <li class="nav-item"><a class="nav-link" href="catalog.html">Produtos</a></li>
                     <li class="nav-item"><a class="nav-link" href="newproduct.html">Vender</a></li>
                 </ul>
-                <form class="d-flex" role="search"><input class="form-control me-2" type="search" placeholder="Search"
-                        aria-label="Search"><button class="btn btn-outline-dark mx-1" type="submit"><img
+                <form id="search_form" class="d-flex" role="search"><input class="form-control me-2" type="search" placeholder="Procurar produto"
+                        aria-label="Search" name="search"><button class="btn btn-outline-dark mx-1" type="submit"><img
                             src="assets/img/transferir.png" height="20px"></button></form>
             </div>
             <div class="dropdown text-end">
@@ -174,6 +174,15 @@
                     localStorage.removeItem('token');
                     window.location.href = 'homepage.html';
                 }
+
+                document.getElementById('search_form').addEventListener('submit', (event) => {
+                    event.preventDefault();
+
+                    let formData = new FormData(event.target);
+                    let formDataEntries = Object.fromEntries(formData.entries());
+
+                    window.location.href = `catalog.html?q=${formDataEntries.search}`;
+                });
             </script>
 </body>
 
