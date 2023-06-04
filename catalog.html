@@ -166,8 +166,8 @@
                     <li class="nav-item"><a class="nav-link" href="catalog.html">Produtos</a></li>
                     <li class="nav-item"><a class="nav-link" href="newproduct.html">Vender</a></li>
                 </ul>
-                <form class="d-flex" role="search"><input class="form-control me-2" type="search" placeholder="Procurar produto"
-                        name="search" id="search_box"></form>
+                <form class="d-flex"><input class="form-control me-2" type="search" placeholder="Procurar produto"
+                        name="search" id="search_box_unlogged"></form>
                 <form class="d-flex"><a class="btn btn-outline-dark mx-1" role="button" href="Login.html"> Login <span
                             class="badge rounded-pill bg-dark text-white ms-1"></span></a></form>
             </div>
@@ -185,8 +185,8 @@
                     <li class="nav-item"><a class="nav-link" href="catalog.html">Produtos</a></li>
                     <li class="nav-item"><a class="nav-link" href="newproduct.html">Vender</a></li>
                 </ul>
-                <form class="d-flex" role="search" id="search"><input class="form-control me-2" type="search" placeholder="Procurar produto"
-                        aria-label="Search" name="search" id="search_box"></form>
+                <form class="d-flex" id="search"><input class="form-control me-2" type="search" placeholder="Procurar produto"
+                        aria-label="Search" name="search" id="search_box_logged"></form>
             </div>
             <div class="dropdown text-end">
                 <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
@@ -262,16 +262,20 @@
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/scripts.js"></script>
     <script>
+        //checkLogin();
+
         window.onload = function() {
             checkLogin();
 
             const urlParams = new URLSearchParams(window.location.search);
             const searchTerm = urlParams.get('q');
             if (searchTerm) {
-                document.getElementById('search_box').value = searchTerm;
+                document.getElementById('search_box_unlogged').value = searchTerm;
+                document.getElementById('search_box_logged').value = searchTerm;
                 executeSearch(searchTerm);
             } else {
-                document.getElementById('search_box').value = '';
+                document.getElementById('search_box_unlogged').value = '';
+                document.getElementById('search_box_logged').value = '';
             }
         }
         function signOut() {
@@ -324,8 +328,11 @@
             executeSearch(formDataEntries.search);
         }, 300);
 
-        document.getElementById('search_box').addEventListener('input', debouncedInputHandler);
-        document.getElementById('search_box').addEventListener('submit', debouncedInputHandler);
+        document.getElementById('search_box_unlogged').addEventListener('input', debouncedInputHandler);
+        document.getElementById('search_box_unlogged').addEventListener('submit', debouncedInputHandler);
+
+        document.getElementById('search_box_logged').addEventListener('input', debouncedInputHandler);
+        document.getElementById('search_box_logged').addEventListener('submit', debouncedInputHandler);
 
 
         function createCatalog(data) {
