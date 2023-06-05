@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Product View</title>
+    <title>Rarefinds</title>
     <link rel="stylesheet" href="css1/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
@@ -143,7 +143,7 @@
             <img id="product_image" src="images/mastersword.jpg">
             <h3 style="margin-top: 20px; text-align: center;" id="product_name">Master Sword</h3>
             <p style="margin-top: 15px;"><b id="product_price">Price: ??</b></p>
-            <button class="buy-button">Comprar Agora</button>
+            <button class="buy-button" onclick="checkout();">Comprar Agora</button>
         </div>
 
         <div class="product-info-container shadow-lg p-3 mb-5 border border-top-0 border-4" style="margin-left: 20px">
@@ -282,6 +282,10 @@
 
             window.location.href = `catalog.html?q=${formDataEntries.search}`;
         });
+
+        function checkout() {
+            window.location.href = `payment.html?id=${productId}`;
+        }
     </script>
 
 </body>

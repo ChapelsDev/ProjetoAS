@@ -32,8 +32,10 @@
 
     .product-img {
       margin: 20px 20px 20px 20px;
-      width: 200px;
-      object-fit: contain;
+      width: auto;
+      height: auto;
+      max-height: 150px;
+      border-radius: 15px;
     }
 
     .product-description {
@@ -161,10 +163,28 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 25px;
+      gap: 50px;
     }
 
-    .img-content {}
+    .payment-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      height: 75px;
+    }
+
+    .img-div {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .img-content {
+      max-width: 100%;
+      max-height: 100%;
+    }
 
     .forms {
       display: flex;
@@ -203,7 +223,7 @@
 
     }
   </style>
-  <title>Homepage</title>
+  <title>Rarefinds</title>
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400|Roboto:300,400,700">
   <link rel="stylesheet" href="assets/css/Articles-Cards-images.css">
@@ -223,7 +243,7 @@
 
 <body class="bg-light flex-column d-flex min-vh-100" onload="checkLogin();">
   <nav class="navbar navbar-light navbar-expand-lg bg-light" id="unlogged">
-    <div class="container px-4 px-lg-5"><a class="navbar-brand" href="homepage.html"><img src="Capturar.PNG"
+    <div class="container px-4 px-lg-5"><a class="navbar-brand" href="index.html"><img src="Capturar.PNG"
           height="44px"></a><button data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false"
         aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -243,7 +263,7 @@
   </nav>
 
   <nav class="navbar navbar-light navbar-expand-lg bg-light" id="logged">
-    <div class="container px-4 px-lg-5"><a class="navbar-brand" href="homepage.html"><img src="Capturar.PNG"
+    <div class="container px-4 px-lg-5"><a class="navbar-brand" href="index.html"><img src="Capturar.PNG"
           height="44px"></a><button data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false"
         aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -273,18 +293,12 @@
     </div>
   </nav>
 
-
-
-
-
-
-
   <div class="main-container">
     <div class="product">
       <div class="product-info">
-        <img class="product-img" src="pokemon.jpg" alt="">
+        <img class="product-img" id="product-img" src="pokemon.jpg" alt="">
         <div class="product-description">
-          <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti, illum rerum.
+          <p class="description" id="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti, illum rerum.
             Dignissimos nostrum sint quasi, provident aperiam id voluptatum velit vero natus ipsa iusto nobis voluptates
             laudantium, maiores vitae alias.</p>
         </div>
@@ -296,7 +310,7 @@
 
     <div class="valor-pagar">
       <p class="text-valor">Valor a pagar:</p>
-      <div class="preço"> 300 </div>
+      <div class="preço" id="price"> 300 </div>
     </div>
 
     <div class="morada">
@@ -314,34 +328,50 @@
       <p style="margin-bottom: 0;"> Tipo de pagamento </p>
 
     </div>
+    <form>
     <div class="tipos-pagamento">
       <div class="payment-images">
-        <img style="width: 38px; margin-top: 5px;" src="Multibanco.svg.png" class="img-content" alt="">
-        <img class="img-content" style="height: 37px;" src="MBWay@2x.png" alt="">
-        <img class="img-content" style="width: 60px;" src="Visa_Inc._logo.svg.webp" alt="">
-        <img class="img-content" style="width: 60px;" src="MasterCard_Logo.svg.png" alt="">
+        <div class="payment-container">
+          <div class="img-div" style="height: 50px;">
+            <img src="Multibanco.svg.png" class="img-content" alt="">
+          </div>
+          <input type="radio" name="payment">
+        </div>
+        <div class="payment-container">
+          <div class="img-div">
+            <img class="img-content" src="MBWay@2x.png" alt="">
+          </div>
+          <input type="radio" name="payment">
+        </div>
+        <div class="payment-container">
+          <div class="img-div" style="height: 30px">
+            <img class="img-content" src="Visa_Inc._logo.svg.webp" alt="">
+          </div>
+          <input type="radio" name="payment">
+        </div>
+        <div class="payment-container">
+          <div class="img-div">
+            <img class="img-content" src="MasterCard_Logo.svg.png" alt="">
+          </div>
+          <input type="radio" name="payment">
+        </div>
+
       </div>
 
-      <div class="forms">
+      <!-- <div class="forms">
         <form action="">
           <input type="radio" name="" id="">
           <input type="radio" name="" id="">
           <input type="radio" name="" id="">
           <input type="radio" name="" id="">
         </form>
-      </div>
+      </div> -->
     </div>
+    </form>
     <div class="confirmar">
-      <button class="confirm-button">Confirmar</button>
+      <button onclick="checkout();" class="confirm-button">Confirmar</button>
     </div>
   </div>
-
-
-
-
-
-
-
 
   <div class="card-footer"><small class="text-body-secondary">Last updated 3 mins ago</small></div>
   </div>
@@ -375,6 +405,37 @@
       localStorage.removeItem('token');
       window.location.href = 'homepage.html';
     }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
+
+    fetch(`https://rarefinds.herokuapp.com/products/${productId}`)
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById('description').textContent = data.name + ' - ' + data.description;
+      document.getElementById('price').textContent = data.price + '€';
+
+      let productImage = document.getElementById('product-img');
+      byteStringToImage(data.image, function(image) {
+        productImage.src = image.src;
+      })
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    })
+
+    function byteStringToImage(byteString, callback) {
+      let img = new Image();
+      img.onload = function () {
+          callback(img);
+      };
+      img.src = byteString;
+  }
+
+  function checkout() {
+    alert('Compra confirmada com sucesso.');
+    window.location.href = 'index.html';
+  }
   </script>
 </body>
 
